@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="br.com.wespa.wchat.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorLightGray">
 
     <ListView
         android:id="@+id/messageList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#fff"
         android:divider="@null"
         android:dividerHeight="0dp" />
 
@@ -21,23 +21,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:background="#fff">
 
         <EditText
             android:id="@+id/inputMsg"
             android:inputType="textCapSentences"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorRed"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
             android:background="#fff"
             android:layout_weight="1" />
 
         <Button
             android:id="@+id/btSend"
-            android:background="@drawable/pop_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pop" />
+            android:text="Send"
+            android:textColor="@color/colorPrimary"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 </LinearLayout>

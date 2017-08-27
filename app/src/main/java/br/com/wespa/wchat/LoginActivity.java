@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         btAuth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btAuth.setEnabled(false);
                 bcast.newEvent(MqttClient.IN_EVENT_CONNECT)
                         .add(MqttClient._EVENT_CONNECT_USERNAME, name.getText().toString())
                         .add(MqttClient._EVENT_CONNECT_PASSWORD, pass.getText().toString())
@@ -51,11 +52,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onEventConnectionSuccess(Bundle bundle) {
+        finish();
         startActivity(new Intent(this, ChatActivity.class));
     }
 
     private void onEventConnectionFail(Bundle bundle) {
         Toast.makeText(this, "Connection failed", Toast.LENGTH_LONG).show();
+        btAuth.setEnabled(true);
     }
 
 }

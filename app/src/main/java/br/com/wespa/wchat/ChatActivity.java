@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+import br.com.wespa.wchat.adapters.MessageAdapter;
 import br.com.wespa.wchat.comm.local.EventHelper;
 import br.com.wespa.wchat.persistency.models.Message;
 import br.com.wespa.wchat.persistency.preferences.Settings;
@@ -40,6 +42,7 @@ public class ChatActivity extends AppCompatActivity {
     private Settings mSettings;
 
     public static boolean isVisible;
+    private String mCurrentUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class ChatActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         mSettings = new Settings(context);
         events = new EventHelper(context, this).register();
+        mCurrentUser = mSettings.getUsername();
 
         inputMsg = (EditText) findViewById(R.id.inputMsg);
         btSend = (Button) findViewById(R.id.btSend);
@@ -59,7 +63,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        mAdapter = new MessageAdapter();
+        mAdapter = new MessageAdapter(getLayoutInflater(), mCurrentUser);
         msgList = (ListView) findViewById(R.id.messageList);
         msgList.setAdapter(mAdapter);
 
@@ -121,50 +125,6 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         inputMsg.setText("");
-    }
-
-    public class MessageAdapter extends BaseAdapter {
-
-        private final ArrayList<Message> mMsgs;
-
-        public MessageAdapter() {
-            mMsgs = new ArrayList<>();
-        }
-
-        @Override
-        public int getCount() {
-            return mMsgs.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return mMsgs.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View view, ViewGroup parent) {
-            if (view == null)
-                view = getLayoutInflater().inflate(android.R.layout.simple_list_item_1, null);
-
-            TextView text = (TextView) view.findViewById(android.R.id.text1);
-            text.setText(mMsgs.get(position).toString());
-
-            return view;
-        }
-
-        public void add(Message msg) {
-            mMsgs.add(msg);
-        }
-
-        public void clear() {
-            mMsgs.clear();
-        }
-
     }
 
 }
